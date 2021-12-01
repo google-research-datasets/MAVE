@@ -30,9 +30,9 @@ The dataset is in [JSON Lines](https://jsonlines.org/) format, where each line i
    ]
 }
 ```
-The product id is exactly the ASIN number in the `All_Amazon_Meta.json` file in the [Amazon Review Data (2018)](https://nijianmo.github.io/amazon/index.html). In this repo, we don't store `paragraphs`, instead we only store the labels. To obtain the full version dataset, we suggest to first request the [Amazon Review Data (2018)](https://nijianmo.github.io/amazon/index.html) to obtain the `All_Amazon_Meta.json` file, then run our binary to clean its product profile and join with the labels. The detailed instructions are in below.
+The product id is exactly the ASIN number in the `All_Amazon_Meta.json` file in the [Amazon Review Data (2018)](https://nijianmo.github.io/amazon/index.html). In this repo, we don't store `paragraphs`, instead we only store the labels. To obtain the full version of the dataset contaning the `paragraphs`, we suggest to first request the [Amazon Review Data (2018)](https://nijianmo.github.io/amazon/index.html), then run our binary to clean its product metadata and join with the labels as described [below](#creating-the-full-version-of-the-dataset).
 
-A concrete example of the product profile and its attributes is shown as follows
+A json object contains a product and multiple attributes. A concrete example is shown as follows
 ```
 {
    "id":"B0002H0A3S",
@@ -95,7 +95,7 @@ A concrete example of the product profile and its attributes is shown as follows
 }
 ```
 
-In addition to positive examples, we also provide a set of negative examples, i.e. product profiles without any attribute. The overall statistics of the positive and negative sets are as follows
+In addition to positive examples, we also provide a set of negative examples, i.e. (product, attribute name) pairs without any evidence. The overall statistics of the positive and negative sets are as follows
 | Counts                            | Positives   | Negatives   |
 | :-------------------------------: | :---------: | :---------: |
 | # products                        | 2226509     | 1248009     |
@@ -108,20 +108,16 @@ In addition to positive examples, we also provide a set of negative examples, i.
 | # unique category-attribute pairs | 2535        | 2305        |
 
 ## Creating the full version of the dataset
-In this repo, we only open source the labels of the MAVE dataset and the code to deterministically clean the original `All_Amazon_Meta.json` file in the [Amazon Review Data (2018)](https://nijianmo.github.io/amazon/index.html) to product profiles, and join with the labels to generate the full version of the MAVE dataset. After this process, the attribute values, paragraph ids and begin/end span indices will be consistent with the cleaned product profiles.
+In this repo, we only open source the labels of the MAVE dataset and the code to deterministically clean the original Amazon product metadata in the [Amazon Review Data (2018)](https://nijianmo.github.io/amazon/index.html), and join with the labels to generate the full version of the MAVE dataset. After this process, the attribute values, paragraph ids and begin/end span indices will be consistent with the cleaned product profiles.
 
 #### Step 1
-Gain access to the [Amazon Review Data (2018)](https://nijianmo.github.io/amazon/index.html) and download the 
-```
-All_Amazon_Meta.json
-```
-file to the folder of this repo.
+Gain access to the [Amazon Review Data (2018)](https://nijianmo.github.io/amazon/index.html) and download the `All_Amazon_Meta.json` file to the folder of this repo.
 #### Step 2
-Run the provided script
+Run script
 ```
 ./clean_amazon_product_metadata_main.sh
 ```
-, which will clean the Amazon metadata to product profiles and join with the positive and negative labels in the `labels/` folder.
-The output full version of the MAVE dataset will be stored in the `reproduce/` folder.
+to clean the Amazon metadata and join with the positive and negative labels in the `labels/` folder.
+The output full MAVE dataset will be stored in the `reproduce/` folder.
 
-The script runs the `clean_amazon_product_metadata_main.py` binary using an [apache beam](https://beam.apache.org/) pipeline. The binary will run on a single CPU core, but distributed setup can be enabled by changing pipeline options. The binary contains utils to clean the Amazon metadata to product profiles and join with labels. The pipeline will finish within a few hours on a Intel Xeon 3GHz CPU core.
+The script runs the `clean_amazon_product_metadata_main.py` binary using an [apache beam](https://beam.apache.org/) pipeline. The binary will run on a single CPU core, but distributed setup can be enabled by changing pipeline options. The binary contains all util functions used to clean the Amazon metadata and join with labels. The pipeline will finish within a few hours on a single Intel Xeon 3GHz CPU core.
