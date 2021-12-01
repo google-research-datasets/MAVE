@@ -20,8 +20,8 @@ The dataset is in [JSON Lines](https://jsonlines.org/) format, where each line i
             {
                "value": <attribute value>,
                "pid": <the paragraph id where the attribute value come from>,
-               "begin": <the begin index of the attribute value in the paragraph>,
-               "end": <the end index (exclusive) of the attribute value in the paragraph>
+               "begin": <the begin character level index of the attribute value in the paragraph>,
+               "end": <the end character level index (exclusive) of the attribute value in the paragraph>
             },
             ...
          ]
