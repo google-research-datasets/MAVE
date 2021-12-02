@@ -1,6 +1,8 @@
 # MAVE: : A Product Dataset for Multi-source Attribute Value Extraction
 The dataset contains 3 million attribute-value annotations across 1257 unique categories created from 2.2 million cleaned Amazon product profiles. It is a large, multi-sourced, diverse dataset for product attribute extraction study.
 
+[Paper to be appear on Arxiv soon]
+
 The dataset is in [JSON Lines](https://jsonlines.org/) format, where each line is a json object with the following schema:
 ```
 {
