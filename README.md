@@ -113,8 +113,10 @@ In addition to positive examples, we also provide a set of negative examples, i.
 In this repo, we only open source the labels of the MAVE dataset and the code to deterministically clean the original Amazon product metadata in the [Amazon Review Data (2018)](https://nijianmo.github.io/amazon/index.html), and join with the labels to generate the full version of the MAVE dataset. After this process, the attribute values, paragraph ids and begin/end span indices will be consistent with the cleaned product profiles.
 
 #### Step 1
-Gain access to the [Amazon Review Data (2018)](https://nijianmo.github.io/amazon/index.html) and download the `All_Amazon_Meta.json` file to the folder of this repo.
+Clone the repo. Note that the files of `./labels/mave_negatives_labels.jsonl` and `./labels/mave_positives_labels.jsonl` containing all the labels are so large that github can not download them properly through cloning. Either mannually downloading or using [git lfs](https://git-lfs.github.com/) is needed.
 #### Step 2
+Gain access to the [Amazon Review Data (2018)](https://nijianmo.github.io/amazon/index.html) and download the `All_Amazon_Meta.json` file to the folder of this repo.
+#### Step 3
 Run script
 ```
 ./clean_amazon_product_metadata_main.sh
